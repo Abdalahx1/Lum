@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Lumora — Funnel &amp; Angle Control Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f0a0d;
+      --card: #1a1116;
+      --card-hover: #22161d;
+      --border: #33202a;
+      --rose: #e05b82;
+      --rose-soft: rgba(224, 91, 130, 0.14);
+      --green: #2ce58b;
+      --text: #f9f2f5;
+      --muted: #a8919b;
+      --font: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: var(--font); -webkit-font-smoothing: antialiased;
+      min-height: 100vh; padding: 36px 20px 80px;
+    }
+    .hub { max-width: 1120px; margin: 0 auto; }
+
+    /* Header */
+    .hub-head {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 20px; flex-wrap: wrap;
+      padding-bottom: 26px; border-bottom: 1px solid var(--border);
+    }
+    .hub-brand { display: flex; align-items: center; gap: 14px; }
+    .hub-logo {
+      width: 46px; height: 46px; border-radius: 12px;
+      background: linear-gradient(135deg, #e05b82, #8e2446);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 22px; color: #fff;
+      box-shadow: 0 8px 20px rgba(224,91,130,0.3);
+    }
+    .hub-title h1 { margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -0.3px; }
+    .hub-title p { margin: 4px 0 0; font-size: 13.5px; color: var(--muted); }
+    .hub-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .hub-ext {
+      text-decoration: none; color: var(--text); font-size: 13px; font-weight: 700;
+      background: var(--card); border: 1px solid var(--border);
+      padding: 10px 15px; border-radius: 10px;
+      display: inline-flex; align-items: center; gap: 7px;
+      transition: all 180ms ease;
+    }
+    .hub-ext:hover { border-color: var(--rose); background: var(--card-hover); }
+
+    /* UTM Builder Bar */
+    .utm-bar {
+      margin-top: 24px; background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 16px 20px;
+      display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+    }
+    .utm-bar__label { font-size: 13px; font-weight: 700; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+    .utm-bar__label span {
+      background: var(--rose-soft); color: var(--rose);
+      padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 800;
+    }
+    .utm-inputs { display: flex; gap: 10px; flex-wrap: wrap; flex: 1; justify-content: flex-end; }
+    .utm-inputs input, .utm-inputs select {
+      background: #120b0f; border: 1px solid var(--border); color: var(--text);
+      padding: 9px 12px; border-radius: 8px; font-size: 13px; font-family: inherit;
+      min-width: 150px;
+    }
+    .utm-inputs input:focus, .utm-inputs select:focus { outline: none; border-color: var(--rose); }
+
+    /* Cards Grid */
+    .grid {
+      margin-top: 26px;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 22px;
+    }
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+    }
+    .card:hover {
+      transform: translateY(-3px); border-color: #593245;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.45);
+    }
+    .card__thumb {
+      position: relative; height: 200px; background: #090608; overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    .card__thumb img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 400ms ease;
+    }
+    .card:hover .card__thumb img { transform: scale(1.04); }
+    .card__status {
+      position: absolute; top: 12px; left: 12px;
+      background: rgba(15, 10, 13, 0.85); backdrop-filter: blur(6px);
+      border: 1px solid rgba(44,229,139,0.4); color: var(--green);
+      font-size: 11px; font-weight: 800; letter-spacing: 0.8px;
+      padding: 4px 10px; border-radius: 20px;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .card__status::before {
+      content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+    }
+    .card__route {
+      position: absolute; top: 12px; right: 12px;
+      background: rgba(15, 10, 13, 0.85); color: #ffdbe6;
+      font-family: monospace; font-size: 12.5px; font-weight: 700;
+      padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border);
+    }
+
+    .card__body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+    .card__angle {
+      font-size: 11px; font-weight: 800; letter-spacing: 1.4px;
+      color: var(--rose); text-transform: uppercase; margin-bottom: 6px;
+    }
+    .card__title { font-size: 19px; font-weight: 800; margin: 0 0 8px; line-height: 1.25; }
+    .card__desc { font-size: 13.5px; color: var(--muted); line-height: 1.55; margin: 0 0 16px; }
+
+    .card__specs {
+      display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px;
+    }
+    .spec-pill {
+      font-size: 11.5px; font-weight: 600; color: #ebd7df;
+      background: #251820; border: 1px solid #3a2430;
+      padding: 4px 9px; border-radius: 6px;
+    }
+
+    .url-box {
+      margin-top: auto;
+      background: #110b0e; border: 1px solid var(--border);
+      border-radius: 10px; padding: 9px 12px;
+      font-family: monospace; font-size: 12px; color: #ffadc6;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      margin-bottom: 12px;
+    }
+
+    .card__btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .btn-hub {
+      all: unset; box-sizing: border-box; cursor: pointer;
+      padding: 11px 14px; border-radius: 10px;
+      font-size: 13px; font-weight: 700; text-align: center;
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      transition: all 180ms ease;
+    }
+    .btn-hub--copy {
+      background: var(--rose); color: #fff;
+      box-shadow: 0 6px 16px rgba(224,91,130,0.28);
+    }
+    .btn-hub--copy:hover { background: #c9476d; }
+    .btn-hub--copy.is-copied { background: #1c9c5e; }
+    .btn-hub--open {
+      background: #251820; color: var(--text); border: 1px solid #3d2633;
+    }
+    .btn-hub--open:hover { border-color: var(--rose); }
+
+    /* Add New Angle Placeholder Card */
+    .card--new {
+      border-style: dashed; border-color: #3d2633;
+      background: rgba(26, 17, 22, 0.45);
+      align-items: center; justify-content: center; text-align: center;
+      padding: 36px 24px; min-height: 380px;
+    }
+    .card--new__icon {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--rose-soft); color: var(--rose);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; font-weight: 700; margin-bottom: 14px;
+    }
+    .card--new h3 { margin: 0 0 8px; font-size: 18px; }
+    .card--new p { margin: 0; font-size: 13.5px; color: var(--muted); max-width: 260px; line-height: 1.55; }
+    .card--new code {
+      margin-top: 14px; display: inline-block;
+      background: #1a1116; border: 1px solid var(--border);
+      padding: 6px 12px; border-radius: 8px; font-size: 12px; color: #ffadc6;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hub">
+    <!-- Top Header -->
+    <header class="hub-head">
+      <div class="hub-brand">
+        <div class="hub-logo">L</div>
+        <div class="hub-title">
+          <h1>Lumora 6-in-1 Wand — Funnel &amp; Angle Hub</h1>
+          <p>All active advertorial pages &amp; split-test angles hosted on this project</p>
+        </div>
+      </div>
+      <div class="hub-actions">
+        <a class="hub-ext" href="https://github.com/Abdalahx1/Lum" target="_blank" rel="noopener">
+          <span>GitHub Repo</span> ↗
+        </a>
+        <a class="hub-ext" href="https://vercel.com/dashboard" target="_blank" rel="noopener">
+          <span>Vercel Analytics</span> ↗
+        </a>
+      </div>
+    </header>
+
+    <!-- Optional UTM Tag Builder for Media Buying -->
+    <div class="utm-bar">
+      <div class="utm-bar__label">
+        <span>MEDIA BUYER TOOL</span>
+        Auto-append UTM tags when copying links:
+      </div>
+      <div class="utm-inputs">
+        <select id="utmSource" aria-label="UTM Source">
+          <option value="">No UTM (Clean URL)</option>
+          <option value="facebook">utm_source=facebook</option>
+          <option value="tiktok">utm_source=tiktok</option>
+          <option value="instagram">utm_source=instagram</option>
+          <option value="snapchat">utm_source=snapchat</option>
+          <option value="google">utm_source=google</option>
+        </select>
+        <input type="text" id="utmCampaign" placeholder="Campaign name (optional)" />
+      </div>
+    </div>
+
+    <!-- Angles Grid -->
+    <div class="grid">
+
+      <!-- Angle 1 -->
+      <article class="card" data-path="/">
+        <div class="card__thumb">
+          <img src="/assets/r1.jpg" alt="Angle 1 — 10 Reasons Listicle" />
+          <span class="card__status">LIVE</span>
+          <span class="card__route">/</span>
+        </div>
+        <div class="card__body">
+          <div class="card__angle">ANGLE 01 • LISTICLE / VIRAL GLOW</div>
+          <h2 class="card__title">10 Reasons Why Women Are Ditching Their Skincare Drawer</h2>
+          <p class="card__desc">Fast-scanning 10-reasons listicle format with comparison chart, verified esthetician avatar (Sarah M.), rose-pink theme, and 3-tier BOGO bundle selector.</p>
+          <div class="card__specs">
+            <span class="spec-pill">Target: Women 25–50</span>
+            <span class="spec-pill">Format: 10-Reason Listicle</span>
+            <span class="spec-pill">Hook: Replace Skincare Drawer</span>
+          </div>
+          <div class="url-box" data-url-display>https://lum-flax.vercel.app/</div>
+          <div class="card__btns">
+            <button class="btn-hub btn-hub--copy" data-copy>📋 Copy Ad Link</button>
+            <a class="btn-hub btn-hub--open" href="/" target="_blank">Open Page ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Angle 2 -->
+      <article class="card" data-path="/v2">
+        <div class="card__thumb">
+          <img src="/assets/v2_woman_hero.jpg" alt="Angle 2 — Anti-Aging Editorial" />
+          <span class="card__status">LIVE</span>
+          <span class="card__route">/v2</span>
+        </div>
+        <div class="card__body">
+          <div class="card__angle">ANGLE 02 • ANTI-AGING / JAWLINE LIFT (40+)</div>
+          <h2 class="card__title">“Stop Blaming Dry Skin For Sagging Jowls” (The Aesthetic Journal)</h2>
+          <p class="card__desc">Clinical authority magazine advertorial by Dr. Elena Vance, MD. Includes 3-layer aging breakdown, interactive 4-mode switcher, draggable Before/After slider, and sticky sidebar.</p>
+          <div class="card__specs">
+            <span class="spec-pill">Target: Women 40–65</span>
+            <span class="spec-pill">Format: Medical Editorial</span>
+            <span class="spec-pill">Hook: Sagging Jowls &amp; Neck Lift</span>
+          </div>
+          <div class="url-box" data-url-display>https://lum-flax.vercel.app/v2</div>
+          <div class="card__btns">
+            <button class="btn-hub btn-hub--copy" data-copy>📋 Copy Ad Link</button>
+            <a class="btn-hub btn-hub--open" href="/v2" target="_blank">Open Page ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Placeholder for Angle 3 -->
+      <div class="card card--new">
+        <div class="card--new__icon">+</div>
+        <h3>Ready for Angle 03?</h3>
+        <p>Ask in chat to create a new test angle (e.g., Med-Spa Cost Comparison, Acne &amp; Pore Glass Skin, or Arabic RTL) and it will appear here automatically.</p>
+        <code>/v3 • /ar • /quiz</code>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const origin = window.location.origin.includes("http")
+        ? window.location.origin
+        : "https://lum-flax.vercel.app";
+      const srcEl = document.getElementById("utmSource");
+      const cmpEl = document.getElementById("utmCampaign");
+
+      function buildUrl(path, angleSlug) {
+        const base = origin + (path === "/" ? "" : path);
+        const src = srcEl.value.trim();
+        const cmp = cmpEl.value.trim();
+        if (!src && !cmp) return base;
+        const params = new URLSearchParams();
+        if (src) params.set("utm_source", src);
+        params.set("utm_medium", "paid");
+        if (cmp) params.set("utm_campaign", cmp);
+        params.set("utm_content", angleSlug);
+        return base + "?" + params.toString();
+      }
+
+      function refreshUrls() {
+        document.querySelectorAll(".card[data-path]").forEach((card, idx) => {
+          const path = card.dataset.path;
+          const slug = path === "/" ? "angle1_10reasons" : "angle2_antiaging";
+          const full = buildUrl(path, slug);
+          card.querySelector("[data-url-display]").textContent = full;
+          card.dataset.fullUrl = full;
+        });
+      }
+
+      srcEl.addEventListener("change", refreshUrls);
+      cmpEl.addEventListener("input", refreshUrls);
+      refreshUrls();
+
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const card = btn.closest(".card");
+          const url = card.dataset.fullUrl;
+          navigator.clipboard.writeText(url).then(() => {
+            const old = btn.textContent;
+            btn.textContent = "✓ Copied!";
+            btn.classList.add("is-copied");
+            setTimeout(() => {
+              btn.textContent = old;
+              btn.classList.remove("is-copied");
+            }, 1600);
+          });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
