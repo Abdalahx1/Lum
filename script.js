@@ -6,8 +6,15 @@
 const CTA_URL = "#offer";
 
 (function () {
-  /* ---------- CTA links ---------- */
-  document.querySelectorAll(".js-cta").forEach((a) => (a.href = CTA_URL));
+  /* ---------- CTA links + Vercel Analytics click tracking ---------- */
+  document.querySelectorAll(".js-cta").forEach((a) => {
+    a.href = CTA_URL;
+    a.addEventListener("click", () => {
+      if (typeof window.va === "function") {
+        window.va("event", { name: "CTA Click", data: { text: a.textContent.trim() } });
+      }
+    });
+  });
 
   /* ---------- Countdown (resets every day at midnight, evergreen) ---------- */
   const elH = document.querySelector('[data-cd="h"]');
