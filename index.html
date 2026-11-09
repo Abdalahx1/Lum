@@ -197,10 +197,68 @@
         <div class="sale__label"><span>BLACK FRIDAY SALE</span></div>
         <div class="sale__img"><img src="assets/sale.jpg" alt="Lumora glow wand" loading="lazy" /></div>
         <div class="sale__body">
-          <div class="sale__eyebrow"><span>FREE WAND WITH YOUR ORDER</span></div>
+          <div class="sale__eyebrow"><span>CHOOSE YOUR BUNDLE &amp; SAVE</span></div>
           <h2 class="sale__title">BUY 1 WAND, GET 1 FREE</h2>
-          <p class="sale__sub">Our biggest sale of 2026. Get the viral 6-in-1 glow wand at our lowest price all year.</p>
-          <a class="btn btn--arrow js-cta" href="#">BUY 1 GET 1 FREE
+          <p class="sale__sub">Our biggest sale of 2026. Select your bundle below to lock in our lowest price all year.</p>
+
+          <!-- Interactive Bundle Selector -->
+          <div class="bundles" role="radiogroup" aria-label="Choose your bundle">
+            <label class="bundle" data-bundle="1" data-cta="GET 1 WAND — $49" data-url="#checkout-1">
+              <input type="radio" name="bundle" value="1" />
+              <span class="bundle__radio"></span>
+              <span class="bundle__info">
+                <span class="bundle__top">
+                  <strong class="bundle__name">1 Glow Wand</strong>
+                  <span class="bundle__tag">Starter</span>
+                </span>
+                <span class="bundle__desc">1× Lumora 6-in-1 Wand + Charging Cable</span>
+              </span>
+              <span class="bundle__price">
+                <strong>$49</strong>
+                <s>$89</s>
+                <small>Save $40</small>
+              </span>
+            </label>
+
+            <label class="bundle is-selected" data-bundle="2" data-cta="GET BUY 1 GET 1 FREE — $69" data-url="#checkout-2">
+              <span class="bundle__ribbon">MOST POPULAR • BOGO DEAL</span>
+              <input type="radio" name="bundle" value="2" checked />
+              <span class="bundle__radio"></span>
+              <span class="bundle__info">
+                <span class="bundle__top">
+                  <strong class="bundle__name">Buy 1, Get 1 FREE</strong>
+                  <span class="bundle__tag bundle__tag--hot">Save 61%</span>
+                </span>
+                <span class="bundle__desc">2× Lumora Wands ($34.50 / each) + <b>FREE Priority Shipping</b></span>
+              </span>
+              <span class="bundle__price">
+                <strong>$69</strong>
+                <s>$178</s>
+                <small>Save $109</small>
+              </span>
+            </label>
+
+            <label class="bundle" data-bundle="3" data-cta="GET 3-WAND BUNDLE — $99" data-url="#checkout-3">
+              <span class="bundle__ribbon bundle__ribbon--value">BEST VALUE • FAMILY &amp; GIFT PACK</span>
+              <input type="radio" name="bundle" value="3" />
+              <span class="bundle__radio"></span>
+              <span class="bundle__info">
+                <span class="bundle__top">
+                  <strong class="bundle__name">Buy 2, Get 1 FREE</strong>
+                  <span class="bundle__tag bundle__tag--best">Save 63%</span>
+                </span>
+                <span class="bundle__desc">3× Lumora Wands ($33 / each) + <b>FREE VIP Shipping</b></span>
+              </span>
+              <span class="bundle__price">
+                <strong>$99</strong>
+                <s>$267</s>
+                <small>Save $168</small>
+              </span>
+            </label>
+          </div>
+
+          <a class="btn btn--arrow js-cta" id="bundleCtaBtn" href="#checkout-2">
+            <span id="bundleCtaText">GET BUY 1 GET 1 FREE — $69</span>
             <svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 12h15m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
           <div class="sale__pills">

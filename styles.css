@@ -237,11 +237,66 @@ h1, h2, h3, p { margin: 0; }
 }
 .sale__img { border-radius: var(--radius) 0 0 var(--radius); overflow: hidden; }
 .sale__img img { width: 100%; height: 100%; object-fit: cover; }
-.sale__body { padding: 60px 30px 40px; text-align: center; display: flex; flex-direction: column; align-items: center; }
-.sale__eyebrow { display: flex; align-items: center; gap: 14px; width: 100%; font-size: 15px; font-weight: 700; letter-spacing: 2.2px; }
+.sale__body { padding: 48px 28px 34px; text-align: center; display: flex; flex-direction: column; align-items: center; }
+.sale__eyebrow { display: flex; align-items: center; gap: 14px; width: 100%; font-size: 14px; font-weight: 700; letter-spacing: 2px; }
 .sale__eyebrow::before, .sale__eyebrow::after { content: ""; flex: 1; height: 1.5px; background: var(--ink); }
-.sale__title { font-size: 38px; font-weight: 800; margin-top: 10px; line-height: 1.1; }
-.sale__sub { font-size: 16px; font-weight: 600; margin: 18px auto 24px; max-width: 360px; line-height: 1.4; }
+.sale__title { font-size: 36px; font-weight: 800; margin-top: 8px; line-height: 1.1; }
+.sale__sub { font-size: 15px; font-weight: 600; margin: 12px auto 18px; max-width: 400px; line-height: 1.4; }
+
+/* ---------------- BUNDLE SELECTOR ---------------- */
+.bundles {
+  display: flex; flex-direction: column; gap: 13px;
+  width: 100%; margin-bottom: 16px; text-align: left;
+}
+.bundle {
+  position: relative;
+  display: grid; grid-template-columns: 22px 1fr auto; align-items: center; gap: 12px;
+  padding: 15px 16px;
+  background: #fff9fb;
+  border: 2px solid #f0cfd9;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 220ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.bundle:hover { border-color: #e28da7; background: #fff4f8; }
+.bundle.is-selected {
+  background: #fdebf1;
+  border-color: var(--cta);
+  box-shadow: 0 6px 18px rgba(212, 93, 126, 0.18);
+}
+.bundle input { position: absolute; opacity: 0; pointer-events: none; }
+.bundle__radio {
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 2px solid #cfa0af; background: #fff;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: all 200ms ease;
+}
+.bundle.is-selected .bundle__radio { border-color: var(--cta); background: var(--cta); }
+.bundle.is-selected .bundle__radio::after {
+  content: ""; width: 8px; height: 8px; border-radius: 50%; background: #fff;
+}
+.bundle__ribbon {
+  position: absolute; top: -10px; right: 14px;
+  background: var(--dark); color: #ffdbe6;
+  font-size: 10px; font-weight: 800; letter-spacing: 1px;
+  padding: 2px 9px; border-radius: 20px; text-transform: uppercase;
+}
+.bundle__ribbon--value { background: #b84264; color: #fff; }
+.bundle__info { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.bundle__top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.bundle__name { font-size: 18px; font-weight: 800; color: var(--ink); line-height: 1.15; }
+.bundle__tag {
+  font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 5px;
+  background: #f5dce4; color: #7a3248;
+}
+.bundle__tag--hot { background: var(--cta); color: #fff; }
+.bundle__tag--best { background: #3b1c28; color: #ffdbe6; }
+.bundle__desc { font-size: 12.5px; color: #6b4854; line-height: 1.3; font-weight: 500; }
+.bundle__desc b { color: #b84264; font-weight: 700; }
+.bundle__price { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.1; }
+.bundle__price strong { font-size: 22px; font-weight: 800; color: var(--ink); }
+.bundle__price s { font-size: 12px; color: #a78590; font-weight: 600; margin-top: 2px; }
+.bundle__price small { font-size: 10.5px; font-weight: 700; color: #c94b70; margin-top: 2px; }
 .sale__pills { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; margin-top: 10px; }
 .pill { background: #fceef2; border: 1px solid #f4d3dd; border-radius: 8px; padding: 15px 8px; font-size: 14px; font-weight: 600; }
 .pill b { color: var(--red); font-weight: 700; }
@@ -407,9 +462,13 @@ h1, h2, h3, p { margin: 0; }
   .sale__img { border-radius: var(--radius) var(--radius) 0 0; aspect-ratio: 1 / 1.07; }
   .sale__label span { font-size: 30px; padding: 8px 40px 6px; }
   .sale__body { padding: 22px 14px 28px; }
-  .sale__eyebrow { font-size: 14px; letter-spacing: 1.8px; gap: 8px; }
-  .sale__title { font-size: 44px; line-height: 1; }
-  .sale__sub { font-size: 14px; margin: 16px auto 18px; }
+  .sale__eyebrow { font-size: 13px; letter-spacing: 1.5px; gap: 8px; }
+  .sale__title { font-size: 36px; line-height: 1.05; }
+  .sale__sub { font-size: 13.5px; margin: 12px auto 16px; }
+  .bundle { padding: 13px 12px; gap: 10px; }
+  .bundle__name { font-size: 16px; }
+  .bundle__price strong { font-size: 19px; }
+  .bundle__ribbon { font-size: 9px; right: 10px; padding: 2px 7px; }
   .pill { font-size: 11.5px; padding: 12px 4px; }
   .sale__fine { font-size: 11.5px; }
 

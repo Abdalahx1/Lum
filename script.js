@@ -8,11 +8,26 @@ const CTA_URL = "#offer";
 (function () {
   /* ---------- CTA links + Vercel Analytics click tracking ---------- */
   document.querySelectorAll(".js-cta").forEach((a) => {
-    a.href = CTA_URL;
+    if (a.id !== "bundleCtaBtn") a.href = CTA_URL;
     a.addEventListener("click", () => {
       if (typeof window.va === "function") {
         window.va("event", { name: "CTA Click", data: { text: a.textContent.trim() } });
       }
+    });
+  });
+
+  /* ---------- Interactive Bundle Selector ---------- */
+  const bundleCards = document.querySelectorAll(".bundle");
+  const bundleCtaBtn = document.getElementById("bundleCtaBtn");
+  const bundleCtaText = document.getElementById("bundleCtaText");
+  bundleCards.forEach((card) => {
+    card.addEventListener("click", () => {
+      bundleCards.forEach((c) => c.classList.remove("is-selected"));
+      card.classList.add("is-selected");
+      const input = card.querySelector('input[type="radio"]');
+      if (input) input.checked = true;
+      if (bundleCtaText && card.dataset.cta) bundleCtaText.textContent = card.dataset.cta;
+      if (bundleCtaBtn && card.dataset.url) bundleCtaBtn.href = card.dataset.url;
     });
   });
 
