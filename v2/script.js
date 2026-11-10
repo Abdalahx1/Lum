@@ -134,11 +134,17 @@
     });
   });
 
-  /* ---------- 8. Vercel Analytics CTA Event Tracking ---------- */
+  /* ---------- 8. Vercel Analytics + Google Tag CTA Event Tracking ---------- */
   document.querySelectorAll(".js-cta, .btn-editorial, .mob-sticky__btn").forEach((a) => {
     a.addEventListener("click", () => {
       if (typeof window.va === "function") {
         window.va("event", { name: "V2 Anti-Aging CTA Click", data: { text: a.textContent.trim() } });
+      }
+      if (typeof window.gtag === "function") {
+        window.gtag("event", "affiliate_cta_click", {
+          angle: "angle-2-sagging-jowls",
+          cta_text: a.textContent.trim()
+        });
       }
     });
   });

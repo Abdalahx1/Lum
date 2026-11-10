@@ -6,12 +6,18 @@
 const CTA_URL = "#offer";
 
 (function () {
-  /* ---------- CTA links + Vercel Analytics click tracking ---------- */
+  /* ---------- CTA links + Vercel Analytics + Google Tag click tracking ---------- */
   document.querySelectorAll(".js-cta").forEach((a) => {
     if (a.id !== "bundleCtaBtn") a.href = CTA_URL;
     a.addEventListener("click", () => {
       if (typeof window.va === "function") {
         window.va("event", { name: "CTA Click", data: { text: a.textContent.trim() } });
+      }
+      if (typeof window.gtag === "function") {
+        window.gtag("event", "affiliate_cta_click", {
+          angle: "angle-1-10-reasons",
+          cta_text: a.textContent.trim()
+        });
       }
     });
   });
