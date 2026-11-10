@@ -140,8 +140,16 @@
       if (typeof window.va === "function") {
         window.va("event", { name: "V2 Anti-Aging CTA Click", data: { text: a.textContent.trim() } });
       }
-      if (typeof window.gtag === "function") {
-        window.gtag("event", "buy_now_click", {
+      var fn = window.gtag || (typeof gtag === "function" ? gtag : null);
+      if (fn) {
+        fn("event", "buy_now_click", {
+          angle: "angle-2-sagging-jowls",
+          cta_text: a.textContent.trim()
+        });
+      }
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: "buy_now_click",
           angle: "angle-2-sagging-jowls",
           cta_text: a.textContent.trim()
         });
