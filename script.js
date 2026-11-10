@@ -14,7 +14,7 @@ const CTA_URL = "#offer";
         window.va("event", { name: "CTA Click", data: { text: a.textContent.trim() } });
       }
       if (typeof window.gtag === "function") {
-        window.gtag("event", "affiliate_cta_click", {
+        window.gtag("event", "buy_now_click", {
           angle: "angle-1-10-reasons",
           cta_text: a.textContent.trim()
         });

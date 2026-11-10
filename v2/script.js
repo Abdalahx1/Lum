@@ -141,7 +141,7 @@
         window.va("event", { name: "V2 Anti-Aging CTA Click", data: { text: a.textContent.trim() } });
       }
       if (typeof window.gtag === "function") {
-        window.gtag("event", "affiliate_cta_click", {
+        window.gtag("event", "buy_now_click", {
           angle: "angle-2-sagging-jowls",
           cta_text: a.textContent.trim()
         });
